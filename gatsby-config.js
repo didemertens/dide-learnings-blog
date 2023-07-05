@@ -9,15 +9,15 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `My learnings`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Dide Mertens`,
+      summary: `who lives and works in Kent, building useful things.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `A blog to keep all my learnings.`,
+    siteUrl: `https://cheery-boba-c1a312.netlify.app/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `didemertens`,
     },
   },
   plugins: [
