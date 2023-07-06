@@ -4,6 +4,7 @@ import get from 'lodash/get'
 
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview'
+import WelcomeMessage from '../components/welcome-message'
 
 class RootIndex extends React.Component {
   render() {
@@ -11,6 +12,7 @@ class RootIndex extends React.Component {
 
     return (
       <Layout location={this.props.location}>
+        <WelcomeMessage />
         <ArticlePreview posts={posts} />
       </Layout>
     )
@@ -19,13 +21,13 @@ class RootIndex extends React.Component {
 
 export default RootIndex
 
-// TODO add tags
 export const pageQuery = graphql`
   query HomeQuery {
     allContentfulBlogPost(sort: { publishDate: DESC }) {
       nodes {
         title
         slug
+        tags
         publishDate
         body {
           raw

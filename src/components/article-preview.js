@@ -12,6 +12,7 @@ const ArticlePreview = ({ posts }) => {
 
   return (
     <Container>
+      <h2>Blogs</h2>
       <ul className={styles.articleList}>
         {posts.map((post) => {
           return (

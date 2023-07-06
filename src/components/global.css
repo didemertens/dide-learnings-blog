@@ -99,3 +99,7 @@ pre,
 code {
   font-family: var(--font-monospace);
 }
+
+main {
+  padding: var(--space-2xl) var(--size-gutter);
+}

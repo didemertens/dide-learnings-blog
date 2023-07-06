@@ -52,7 +52,9 @@
 
   /* tokens */
   /* colors */
-  --primary: #4a90e2;
+  --primary: #bd3f20;
+  --secondary: #f18f01;
+  --tertiary: #788961;
   --background: var(--white);
   --border: var(--black-fade-5);
 
@@ -68,7 +70,7 @@
 
   /* size */
   --size-gutter: var(--space-2xl);
-  --size-logo: var(--space-2xl);
+  --size-logo: var(--space-3xl);
   --size-max-width: 80rem;
 }
 

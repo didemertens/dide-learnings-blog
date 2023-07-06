@@ -10,7 +10,7 @@
 .title {
   display: inline-block;
   font-size: var(--text-lg);
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
   margin-top: var(--space-lg);
   border-bottom: 1.5px solid transparent;
 }

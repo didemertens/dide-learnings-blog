@@ -4,8 +4,12 @@
 }
 
 .tag {
-  background-color: var(--black-fade-5);
+  background-color: var(--secondary);
   border-radius: var(--radius-sm);
   line-height: var(--solid);
   padding: var(--space-sm) var(--space-md);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
