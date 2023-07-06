@@ -79,20 +79,20 @@ kbd {
   font-size: 90%;
 }
 
-tt,
-code {
+tt {
   background-color: var(--black-fade-5);
   border-radius: var(--radius-sm);
   font-weight: var(--medium);
   padding: 0.2em 0;
 }
 
-code:before,
-code:after,
-tt:before,
-tt:after {
-  content: ' ';
-  letter-spacing: -0.2em;
+code {
+  background-color: transparent;
+}
+
+pre {
+  background-color: var(--black-fade-5);
+  padding: 12px;
 }
 
 pre,

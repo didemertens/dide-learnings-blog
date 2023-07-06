@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
-import { renderRichText } from 'gatsby-source-contentful/rich-text'
+import { renderRichText } from 'gatsby-source-contentful/rich-text';
+
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
-import { BLOCKS } from '@contentful/rich-text-types'
-import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import readingTime from 'reading-time'
 
 import Seo from '../components/seo'
@@ -13,25 +13,55 @@ import Hero from '../components/hero'
 import Tags from '../components/tags'
 import * as styles from './blog-post.module.css'
 
+import { BLOCKS, MARKS } from '@contentful/rich-text-types';
+
+
+
 class BlogPostTemplate extends React.Component {
   render() {
+    const data = get(this.props, 'data')
     const post = get(this.props, 'data.contentfulBlogPost')
     const previous = get(this.props, 'data.previous')
     const next = get(this.props, 'data.next')
 
     const plainTextBody = documentToPlainTextString(JSON.parse(post.body.raw))
-    const { minutes: timeToRead } = readingTime(plainTextBody)
-    
+    const {minutes: timeToRead} = readingTime(plainTextBody)
+
+
     const options = {
       renderNode: {
+        renderMark: { 
+          [MARKS.BOLD]: text => <b>{text}</b>, 
+          [MARKS.ITALIC]: text => <i>{text}</i>, 
+          [MARKS.UNDERLINE]: text => <u>{text}</u>, 
+          [MARKS.CODE]: text => <code>{text}</code>, 
+        },
+        [BLOCKS.PARAGRAPH]: (node, children) => {
+          const hasCodeMark = node?.content?.[0]?.marks?.some(mark => mark.type === MARKS.CODE);
+      
+          if (hasCodeMark) {
+            return <pre><code>{children}</code></pre>;
+          }
+      
+          return <p>{children}</p>;
+        },
+        // Show images
         [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const { gatsbyImage, description } = node.data.target
-        return (
-           <GatsbyImage
-              image={getImage(gatsbyImage)}
-              alt={description}
-           />
-         )
+          const { target } = node.data;
+          const assetNode = target?.sys?.id ? data.allContentfulAsset.nodes.find(asset => asset.contentful_id === target.sys.id) : null;
+
+          if (assetNode) {
+            const { gatsbyImageData, description } = assetNode;
+
+            return (
+                <GatsbyImage
+                  image={gatsbyImageData}
+                  alt={description}
+                />
+            );
+          }
+
+          return null;
         },
       },
     };
@@ -90,8 +120,8 @@ export const pageQuery = graphql`
     $slug: String!
     $previousPostSlug: String
     $nextPostSlug: String
-  ) {
-    contentfulBlogPost(slug: { eq: $slug }) {
+    ) {
+      contentfulBlogPost(slug: { eq: $slug }) {
       slug
       title
       publishDate(formatString: "MMMM Do, YYYY")
@@ -101,7 +131,14 @@ export const pageQuery = graphql`
       }
       tags
     }
-    previous: contentfulBlogPost(slug: { eq: $previousPostSlug }) {
+    allContentfulAsset {
+      nodes {
+        contentful_id
+        gatsbyImageData(layout: FULL_WIDTH)
+        description
+      }
+    }
+    previous: contentfulBlogPost(slug: {eq: $previousPostSlug }) {
       slug
       title
     }
@@ -110,4 +147,4 @@ export const pageQuery = graphql`
       title
     }
   }
-`
+ `
