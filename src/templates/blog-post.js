@@ -57,6 +57,10 @@ class BlogPostTemplate extends React.Component {
                 <GatsbyImage
                   image={gatsbyImageData}
                   alt={description}
+                  style={{
+                    height: `${assetNode.height}px`,
+                    width: `${assetNode.width}px`,
+                  }}
                 />
             );
           }
@@ -136,6 +140,8 @@ export const pageQuery = graphql`
         contentful_id
         gatsbyImageData(layout: FULL_WIDTH)
         description
+        width
+        height
       }
     }
     previous: contentfulBlogPost(slug: {eq: $previousPostSlug }) {
